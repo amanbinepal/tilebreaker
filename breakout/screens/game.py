@@ -2,7 +2,7 @@ import random
 import pygame
 from screens import BaseScreen
 
-from ..components import Paddle, Ball, TileGroup, Score
+from ..components import Paddle, Ball, TileGroup, Score, Timer
 from components import TextBox
 
 #from components import score
@@ -30,12 +30,21 @@ class GameScreen(BaseScreen):
         #Score
         self.score = Score(100,100,0)
 
+        #Timer
+        #self.timer = Timer(200,200)
+        #print(self.timer)
+
         # Put all sprites in the group
         self.sprites = pygame.sprite.Group()
         self.sprites.add(self.paddle)
         self.sprites.add(self.ball)
         self.sprites.add(self.score)
         self.score_value=0
+        self.score_combo=1
+        self.score_total=0
+        self.combo = False
+        self.multiplier = 1
+        self.first_collision = True
 
     def update(self):
         #global score
@@ -48,21 +57,37 @@ class GameScreen(BaseScreen):
 
         self.sprites.update()
         collided = self.ball.collidetiles(self.tiles)
+        caught_the_ball = self.ball.collidepaddle(self.paddle.rect)
+        
         #score = 0
         #while self.running == True:
         #score = 0
-        if collided == True:
-            self.score_value += 1
+        if collided or caught_the_ball:
+            if collided:
+                if self.first_collision:
+                    self.score_value += 1
+                    self.first_collision = False
+                else:
+                    self.score_value += (1 + self.multiplier)
+                    self.multiplier += 1
+            else:
+                self.multiplier = 1
+                self.first_collision = True
+            #self.score_total = self.score_value * self.score_combo
+            #self.score_combo += 1
+            #self.score = Score(100, 100, self.score_total)
             self.score = Score(100, 100, self.score_value)
             self.sprites.add(self.score)
             print(self.score_value)
             pygame.display.update
+        #if caught_the_ball == True:
+            #self.score_combo = 1
             #print(score`)
 
         #if collided == True:
             #self.score = score.Score(width=100, height=100)
 
-        caught_the_ball = self.ball.collidepaddle(self.paddle.rect)
+        #caught_the_ball = self.ball.collidepaddle(self.paddle.rect)
 
         if self.ball.rect.bottom > self.paddle.rect.top and not caught_the_ball:
             self.running = False
@@ -92,6 +117,7 @@ class GameScreen(BaseScreen):
         self.window.blit(bkgrd,(0,-50))
         self.sprites.draw(self.window)
         self.tiles.draw(self.window)
+        #self.window.blit(self.timer.time, (500,500))
         
 
     def manage_event(self, event):
@@ -103,5 +129,8 @@ class GameScreen(BaseScreen):
             if event.key == pygame.K_SPACE:
                 self.ball.speed = 10
                 self.ball.angle = 1.5
+        #elif event.type == self.timer.event:
+            #self.timer.c_time +=1
+            #self.timer.time(str(self.timer.c_time), True, (0,255,0))
 
     
