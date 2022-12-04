@@ -92,6 +92,9 @@ class GameScreen(BaseScreen):
         if self.ball.rect.bottom > self.paddle.rect.top and not caught_the_ball:
             self.running = False
             self.next_screen = "game_over"
+            with open("score.txt", "a") as my_text_file:
+                my_text_file.write(str(self.score_value))
+                my_text_file.write("\n")
         
         #self.tiles.num_tiles
         if not self.tiles:
