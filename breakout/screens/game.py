@@ -23,7 +23,7 @@ class GameScreen(BaseScreen):
         self.ball.angle = random.randint(0, 31416) / 10000
 
         # Create the tiles
-        self.level = 3
+        self.level = 0
         self.tiles = TileGroup(self.level, tile_width=120, tile_height=30)
        
 
@@ -74,13 +74,14 @@ class GameScreen(BaseScreen):
             #self.next_screen = "game_over"
             #print(self.tiles.num_tiles)
             self.level += 1
-            self.ball.speed += 2
+            self.ball.speed += 1
             self.tiles = TileGroup(level=self.level)
             
             if self.level == 4:
                 #self.running == False
                 #self.next_screen = "game_over"
                 self.level = -1
+                self.ball.speed += 2
                 print("level is" + str(self.level))
 
             

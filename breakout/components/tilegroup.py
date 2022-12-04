@@ -28,7 +28,7 @@ class TileGroup(pygame.sprite.Group):
                 self.add(tile)
                 count+=1
         elif level == 2:
-            num_tiles = 10
+            num_tiles = 4
             count=0
             while count < num_tiles:
                 x = random.randint(100, 600)
