@@ -6,7 +6,6 @@ import random
 class TileGroup(pygame.sprite.Group):
     def __init__(self, level, tile_width=100, tile_height=30):
         super().__init__()
-        #self.num_tiles = num_tiles
 
         if level == 0:
             num_tiles = 1

@@ -8,9 +8,6 @@ class Paddle(MySprite):
 
     def __init__(self, width, height, color=(0, 0, 0), **kwargs):
         super().__init__(**kwargs)
-        #self.image = pygame.Surface((width, height))
-        #self.image.fill(color)
-        #self.rect = self.image.get_rect()
         size = (width, height)
         self.image = pygame.image.load('breakout/components/ruby.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, size)

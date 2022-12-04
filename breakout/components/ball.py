@@ -10,16 +10,10 @@ class Ball(MySprite):
         self, width=50, height=50, color=(255, 0, 0), bgcolor=(255, 255, 255), **kwargs
     ):
         super().__init__(**kwargs)
-
-        #self.image = pygame.Surface((width, height))
         size = (width, height)
         self.image = pygame.image.load('breakout/components/rasengan.webp').convert_alpha()
         self.image = pygame.transform.scale(self.image, size)
-        self.rect = self.image.get_rect()
-        #self.image.fill(bgcolor)
-        #pygame.draw.circle(self.image, color, (width / 2, height / 2), width / 2)
-        #self.image = pygame.image.load('breakout/components/mario.png')
-        #self.image.blit(mario, (0,0))     
+        self.rect = self.image.get_rect()    
         pygame.display.update()
 
         self.speed = 0
