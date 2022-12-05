@@ -1,5 +1,7 @@
 import random
 import pygame
+import requests
+import json
 from screens import BaseScreen
 
 from ..components import Paddle, Ball, TileGroup, Score, Timer
@@ -92,9 +94,10 @@ class GameScreen(BaseScreen):
         if self.ball.rect.bottom > self.paddle.rect.top and not caught_the_ball:
             self.running = False
             self.next_screen = "game_over"
-            with open("score.txt", "a") as my_text_file:
-                my_text_file.write(str(self.score_value))
-                my_text_file.write("\n")
+            #with open("score.txt", "a") as my_text_file:
+                #my_text_file.write(str(self.score_value))
+                #my_text_file.write("\n")
+            post = requests.post("http://127.0.0.1:5000/add", json={"Score": self.score_value})
         
         #self.tiles.num_tiles
         if not self.tiles:
