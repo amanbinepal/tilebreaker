@@ -30,7 +30,7 @@ class GameScreen(BaseScreen):
        
 
         #Score
-        self.score = Score(100,100,0)
+        self.score = Score(100,60,0)
 
         #Timer
         #self.timer = Timer(200,200)
@@ -78,7 +78,7 @@ class GameScreen(BaseScreen):
             #self.score_total = self.score_value * self.score_combo
             #self.score_combo += 1
             #self.score = Score(100, 100, self.score_total)
-            self.score = Score(100, 100, self.score_value)
+            self.score = Score(100, 60, self.score_value)
             self.sprites.add(self.score)
             print(self.score_value)
             pygame.display.update
@@ -90,6 +90,13 @@ class GameScreen(BaseScreen):
             #self.score = score.Score(width=100, height=100)
 
         #caught_the_ball = self.ball.collidepaddle(self.paddle.rect)
+
+        clock = pygame.time.Clock()
+        clock.tick(144)
+        text_font = pygame.font.SysFont("Times New Roman", 25)
+        time_secs = int(pygame.time.get_ticks() / 1000)
+        self.time = text_font.render("Time: " + str(time_secs), True, (0, 255, 0))
+        
 
         if self.ball.rect.bottom > self.paddle.rect.top and not caught_the_ball:
             self.running = False
@@ -123,7 +130,7 @@ class GameScreen(BaseScreen):
         self.window.blit(bkgrd,(0,-50))
         self.sprites.draw(self.window)
         self.tiles.draw(self.window)
-        #self.window.blit(self.timer.time, (500,500))
+        self.window.blit(self.time, (0,28))
         
 
     def manage_event(self, event):
